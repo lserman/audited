@@ -11,7 +11,7 @@ Gem::Specification.new do |gem|
   gem.homepage    = 'https://github.com/collectiveidea/audited'
   gem.license     = 'MIT'
 
-  gem.add_dependency 'audited', gem.version
+  # gem.add_dependency 'audited', gem.version
   gem.add_dependency 'activerecord', '~> 3.0'
 
   gem.files         = `git ls-files lib`.split($\).grep(/(active_?record|generators)/)
