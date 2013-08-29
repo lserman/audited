@@ -293,21 +293,21 @@ describe Audited::Auditor, :adapter => :active_record do
     it "should find the given revision" do
       revision = user.revision(3)
       revision.should be_a_kind_of( Models::ActiveRecord::User )
-      revision.version.should be(3)
+      revision.audited_version.should be(3)
       revision.name.should == 'Foobar 3'
     end
 
     it "should find the previous revision with :previous" do
       revision = user.revision(:previous)
-      revision.version.should be(4)
+      revision.audited_version.should be(4)
       #revision.should == user.revision(4)
       revision.attributes.should == user.revision(4).attributes
     end
 
     it "should be able to get the previous revision repeatedly" do
       previous = user.revision(:previous)
-      previous.version.should be(4)
-      previous.revision(:previous).version.should be(3)
+      previous.audited_version.should be(4)
+      previous.revision(:previous).audited_version.should be(3)
     end
 
     it "should be able to set protected attributes" do
@@ -377,7 +377,7 @@ describe Audited::Auditor, :adapter => :active_record do
       audit.created_at = 1.hour.ago
       audit.save!
       user.update_attributes :name => 'updated'
-      user.revision_at( 2.minutes.ago ).version.should be(1)
+      user.revision_at( 2.minutes.ago ).audited_version.should be(1)
     end
 
     it "should be nil if given a time before audits" do
