@@ -82,7 +82,7 @@ module Audited
         define_callbacks :audit
         set_callback :audit, :after, :after_audit, :if => lambda { self.respond_to?(:after_audit) }
 
-        attr_accessor :version
+        attr_accessor :audited_version
 
         extend Audited::Auditor::AuditedClassMethods
         include Audited::Auditor::AuditedInstanceMethods
@@ -183,8 +183,8 @@ module Audited
 
       def audits_to(version = nil)
         if version == :previous
-          version = if self.version
-                      self.version - 1
+          version = if self.audited_version
+                      self.audited_version - 1
                     else
                       previous = audits.descending.offset(1).first
                       previous ? previous.version : 1
